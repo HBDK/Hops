@@ -13,7 +13,6 @@ public class SshGitTest
     public async Task ShouldCloneRepoAsync()
     {
         // Given
-        var fileName = "test.txt";
         using var distDir = new TempFolder($"{nameof(FolderGitTest)}-DistDir-");
 
         // When
