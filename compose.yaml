@@ -1,0 +1,8 @@
+services:
+  hops:
+    build: ./
+    user: "root:root"
+    volumes:
+      - ../hops-test:/git/hops-test
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.ssh:/root/.ssh
