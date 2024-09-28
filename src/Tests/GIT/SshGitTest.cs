@@ -5,7 +5,7 @@ using FluentAssertions;
 using LibGit2Sharp;
 using Tests.Tools;
 
-namespace Tests;
+namespace Tests.GIT;
 
 public class SshGitTest
 {
@@ -112,17 +112,17 @@ public class SshGitTest
         }
         sourceRepo.Index.Add(fileName);
         sourceRepo.Index.Write();
-        
+
 
         sourceRepo.Commit("test1", signature, signature);
 
         var distRepo = new GitRepo(distDir.DirectoryInfo.FullName);
         distRepo.Clone(sourceDir.DirectoryInfo.FullName);
-       
+
         File.AppendAllLines(distDir.DirectoryInfo.FullName + "/" + fileName, [change]);
         using (var changedFile = File.OpenText(distDir.DirectoryInfo.FullName + "/" + fileName))
         {
-           changedFile.ReadToEnd().Should().Contain(change);
+            changedFile.ReadToEnd().Should().Contain(change);
         }
 
         // When
@@ -135,5 +135,5 @@ public class SshGitTest
         file.ReadToEnd().Should().NotContain(change);
     }
 
-    private Signature GetAuthor(DateTime? time = null, string name = "tester", string email = "tester@test.dk") => new (name, email, time ?? DateTime.Now);
+    private Signature GetAuthor(DateTime? time = null, string name = "tester", string email = "tester@test.dk") => new(name, email, time ?? DateTime.Now);
 }

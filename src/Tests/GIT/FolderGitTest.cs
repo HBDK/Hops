@@ -4,7 +4,7 @@ using FluentAssertions;
 using LibGit2Sharp;
 using Tests.Tools;
 
-namespace Tests;
+namespace Tests.GIT;
 
 public class FolderGitTest
 {
@@ -25,7 +25,7 @@ public class FolderGitTest
         }
         sourceRepo.Index.Add(fileName);
         sourceRepo.Index.Write();
-        
+
         var signature = GetAuthor();
 
         sourceRepo.Commit("test1", signature, signature);
@@ -57,7 +57,7 @@ public class FolderGitTest
         }
         sourceRepo.Index.Add(firstFileName);
         sourceRepo.Index.Write();
-        
+
 
         sourceRepo.Commit("test1", signature, signature);
 
@@ -71,7 +71,7 @@ public class FolderGitTest
         }
         sourceRepo.Index.Add(secondFileName);
         sourceRepo.Index.Write();
-        
+
 
         sourceRepo.Commit("test2", signature, signature);
         // When
@@ -106,7 +106,7 @@ public class FolderGitTest
         }
         sourceRepo.Index.Add(firstFileName);
         sourceRepo.Index.Write();
-        
+
 
         sourceRepo.Commit("test1", signature, signature);
 
@@ -152,7 +152,7 @@ public class FolderGitTest
         }
         sourceRepo.Index.Add(firstFileName);
         sourceRepo.Index.Write();
-        
+
 
         sourceRepo.Commit("test1", signature, signature);
 
@@ -192,17 +192,17 @@ public class FolderGitTest
         }
         sourceRepo.Index.Add(fileName);
         sourceRepo.Index.Write();
-        
+
 
         sourceRepo.Commit("test1", signature, signature);
 
         var distRepo = new GitRepo(distDir.DirectoryInfo.FullName);
         distRepo.Clone(sourceDir.DirectoryInfo.FullName);
-       
+
         File.AppendAllLines(distDir.DirectoryInfo.FullName + "/" + fileName, [change]);
         using (var changedFile = File.OpenText(distDir.DirectoryInfo.FullName + "/" + fileName))
         {
-           changedFile.ReadToEnd().Should().Contain(change);
+            changedFile.ReadToEnd().Should().Contain(change);
         }
 
         // When
@@ -215,5 +215,5 @@ public class FolderGitTest
         file.ReadToEnd().Should().NotContain(change);
     }
 
-    private Signature GetAuthor(DateTime? time = null, string name = "tester", string email = "tester@test.dk") => new (name, email, time ?? DateTime.Now);
+    private Signature GetAuthor(DateTime? time = null, string name = "tester", string email = "tester@test.dk") => new(name, email, time ?? DateTime.Now);
 }
